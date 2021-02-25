@@ -1,0 +1,26 @@
+int id = Convert.ToInt32(idbox.Text);
+            String name = namebox.Text.ToString();
+            int salary = Convert.ToInt32(salarybox.Text);
+
+            var id_params = new SqlParameter {
+                ParameterName= "@Empid",
+                Value= id
+            };
+            var name_params = new SqlParameter
+            {
+                ParameterName = "@EmpName",
+                Value = name
+            };
+            var salary_params = new SqlParameter
+            {
+                ParameterName = "@salary",
+                Value = salary
+            };
+
+            using (employeeEntities DBContext=new employeeEntities())
+            {
+                DBContext.EmployeeDetails.SqlQuery("exec InsertEmployee @Empid '@EmpName' @salary",id_params,name_params,salary_params);
+                DBContext.SaveChanges();
+                showbutton_Click(sender, e);
+            }
+            idbox.Clear();namebox.Clear();salarybox.Clear();
